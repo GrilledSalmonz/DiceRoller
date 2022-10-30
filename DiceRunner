@@ -1,0 +1,76 @@
+## Import random number generator. 
+
+import random
+
+## User will input how many dice to roll with (4, 6, 8, 10, 12, or 20) sides. 
+
+def parameters():
+    global rolls
+    global sides
+    rolls = int(input('Roll how many die?'))
+    sides = int(input('\nChoose how many sides each die has:\n4, 6, 8, 10, 12, 20'))
+    
+## Verifies that the user inputted one of the sides given. If not, ask the user to enter a 
+## different value until True. 
+
+def check_Sides():
+    global sides
+    verify = False
+    parameters()
+    while verify == False:
+        if all([sides != 4, sides !=6, sides != 8, sides != 10, sides != 12, sides != 20]):
+            print('\n**Please select only the options given**\n')
+            retry = int(input('Choose how many sides each die has:\n4, 6, 8, 10, 12, 20'))
+            sides = retry
+        else:
+            verify = True
+
+## After check_Sides returns True, roll the appropiate dice an appropiate amount of times. 
+
+def roll_Dice(): 
+    print('------------------------------\n')
+    for count in range(rolls):
+       dice_roll = random.randint(1, int(sides)) 
+       print(dice_roll, end='   ')
+    print('\n\n------------------------------\n')
+ 
+## After the roll_Dice() function runs, print out a prompt asking the user if they would
+## like to reroll, set new parameters for the die, or quit the game. 
+
+def userGUI():
+    global user
+    user = input('-Press Enter to re-roll \n-Type q, quit, or exit to quit \n-Type n or new to set new parameters\n')
+    user = user.lower()
+    if user == 'q' or user == 'exit' or user == 'quit':
+        print ('\nThank you for playing!')
+        quit() 
+
+## Function caller. 
+
+def dice_Runner():
+    check_Sides()
+    print ()
+    roll_Dice()
+
+#### Code runs here ####
+
+dice_Runner()
+
+userGUI()
+
+## After the GUI pops up and the user makes their selection, run the apporpiate events based
+## off their choice: quit program, set new parameters, or else, reroll the die with the same 
+## parameters. 
+
+while user != 'q': 
+    if user == 'n' or user == 'new':
+        print('\nSetting new parameters!\n')
+        dice_Runner()
+    elif user == '':
+        print ('Okay, rerolling!\n')
+        roll_Dice()
+    else: 
+        print ('\nPlease try another selection...\n')
+    userGUI()
+
+## End of code.
